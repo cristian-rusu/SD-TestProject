@@ -1,0 +1,6 @@
+@host = http://localhost:5080
+# @name product
+POST {{host}}/catalog/products
+Content-Type: application/json
+
+{ "name": "Demo Keyboard", "description": "Live demo", "price": 79.50 }

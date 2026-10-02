@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Modules/Catalog/Company.Catalog.Application/Company.Catalog.Application.csproj" />
+    <Project Path="src/Modules/Catalog/Company.Catalog.Domain/Company.Catalog.Domain.csproj" />
+    <Project Path="src/Modules/Catalog/Company.Catalog.Infrastructure/Company.Catalog.Infrastructure.csproj" />
+    <Project Path="src/Modules/Inventory/Company.Inventory.Application/Company.Inventory.Application.csproj" />
+    <Project Path="src/Modules/Inventory/Company.Inventory.Domain/Company.Inventory.Domain.csproj" />
+    <Project Path="src/Modules/Inventory/Company.Inventory.Infrastructure/Company.Inventory.Infrastructure.csproj" />
+    <Project Path="src/Modules/Ordering/Company.Ordering.Application/Company.Ordering.Application.csproj" />
+    <Project Path="src/Modules/Ordering/Company.Ordering.Domain/Company.Ordering.Domain.csproj" />
+    <Project Path="src/Modules/Ordering/Company.Ordering.Infrastructure/Company.Ordering.Infrastructure.csproj" />
+    <Project Path="src/Company.Webshop.Main/Company.Webshop.Main.csproj" />
+    <Project Path="src/Company.Webshop.Shared/Company.Webshop.Shared.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/IntegrationTest/IntegrationTest.csproj" />
+    <Project Path="test/UnitTests/UnitTests.csproj" />
+  </Folder>
+</Solution>

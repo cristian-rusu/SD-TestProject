@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net10.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable></PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Company.Catalog.Domain\Company.Catalog.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Company.Webshop.Shared\Company.Webshop.Shared.csproj" />
+  </ItemGroup>
+  <ItemGroup><InternalsVisibleTo Include="Company.Catalog.Infrastructure" /><InternalsVisibleTo Include="UnitTests" /></ItemGroup>
+</Project>

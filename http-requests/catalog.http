@@ -1,0 +1,23 @@
+@host = http://localhost:5080
+
+### Create a draft product
+# @name createProduct
+POST {{host}}/catalog/products
+Content-Type: application/json
+
+{
+  "name": "Modular Monolith Handbook",
+  "description": "A demo product",
+  "price": 29.95
+}
+
+@productId = {{createProduct.response.body.$.productId}}
+
+### Publish the product
+POST {{host}}/catalog/products/{{productId}}/publish
+
+### Query the product
+GET {{host}}/catalog/products/{{productId}}
+
+### Discontinue the product
+POST {{host}}/catalog/products/{{productId}}/discontinue

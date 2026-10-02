@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net10.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable></PropertyGroup>
+  <ItemGroup><FrameworkReference Include="Microsoft.AspNetCore.App" /><PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.1" /><PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" /></ItemGroup>
+  <ItemGroup><ProjectReference Include="..\Company.Inventory.Application\Company.Inventory.Application.csproj" /><ProjectReference Include="..\Company.Inventory.Domain\Company.Inventory.Domain.csproj" /><ProjectReference Include="..\..\Ordering\Company.Ordering.Application\Company.Ordering.Application.csproj" /><ProjectReference Include="..\..\..\Company.Webshop.Shared\Company.Webshop.Shared.csproj" /></ItemGroup>
+  <ItemGroup><InternalsVisibleTo Include="IntegrationTest" /><InternalsVisibleTo Include="UnitTests" /></ItemGroup>
+</Project>

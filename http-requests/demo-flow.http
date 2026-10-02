@@ -1,0 +1,49 @@
+@host = http://localhost:5080
+
+### 1. Create product
+# @name createDemoProduct
+POST {{host}}/catalog/products
+Content-Type: application/json
+
+{ "name": "Demo Keyboard", "description": "Live demonstration", "price": 79.50 }
+
+@productId = {{createDemoProduct.response.body.$.productId}}
+
+### 2. Publish product
+POST {{host}}/catalog/products/{{productId}}/publish
+
+### 3. Replenish stock to 10
+POST {{host}}/inventory/products/{{productId}}/replenish
+Content-Type: application/json
+
+{ "quantity": 10 }
+
+### 4. Place order for 4 (sufficient stock)
+# @name placeSuccessfulOrder
+POST {{host}}/orders
+Content-Type: application/json
+
+{ "productId": "{{productId}}", "quantity": 4 }
+
+@successfulOrderId = {{placeSuccessfulOrder.response.body.$.orderId}}
+
+### 5. Expected: Confirmed with AcceptedPrice 79.50
+GET {{host}}/orders/{{successfulOrderId}}
+
+### 6. Expected: stock is 6
+GET {{host}}/inventory/products/{{productId}}
+
+### 7. Place order for 20 (insufficient stock)
+# @name placeRejectedOrder
+POST {{host}}/orders
+Content-Type: application/json
+
+{ "productId": "{{productId}}", "quantity": 20 }
+
+@rejectedOrderId = {{placeRejectedOrder.response.body.$.orderId}}
+
+### 8. Expected: Rejected
+GET {{host}}/orders/{{rejectedOrderId}}
+
+### 9. Expected: stock remains 6
+GET {{host}}/inventory/products/{{productId}}

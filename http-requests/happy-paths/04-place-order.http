@@ -1,0 +1,12 @@
+@host = http://localhost:5080
+@productId = REPLACE_WITH_PRODUCT_ID
+POST {{host}}/orders
+Content-Type: application/json
+
+{ "productId": "{{productId}}", "quantity": 4 }
+
+### Insufficient stock: expected persisted Rejected order; stock remains 6
+POST {{host}}/orders
+Content-Type: application/json
+
+{ "productId": "{{productId}}", "quantity": 20 }

@@ -1,0 +1,3 @@
+@host = http://localhost:5080
+@productId = REPLACE_WITH_PRODUCT_ID
+POST {{host}}/catalog/products/{{productId}}/publish

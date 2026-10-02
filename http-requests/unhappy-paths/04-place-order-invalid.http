@@ -1,0 +1,14 @@
+@host = http://localhost:5080
+@unknownProductId = 00000000-0000-0000-0000-000000000001
+
+### Invalid quantity
+POST {{host}}/orders
+Content-Type: application/json
+
+{ "productId": "{{unknownProductId}}", "quantity": 0 }
+
+### Unknown, Draft, and Discontinued products return 400 when used here
+POST {{host}}/orders
+Content-Type: application/json
+
+{ "productId": "{{unknownProductId}}", "quantity": 1 }

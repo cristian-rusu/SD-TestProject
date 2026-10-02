@@ -1,0 +1,94 @@
+asyncapi: 3.0.0
+info:
+  title: Webshop in-process integration events
+  version: 1.0.0
+  description: >-
+    Contract documentation for integration events inside the modular monolith.
+    These channels are dispatched in process; no AMQP broker is used.
+defaultContentType: application/json
+
+channels:
+  orderPlaced:
+    address: ordering.order-placed
+    description: Ordering announces a committed Pending order to Inventory.
+    messages:
+      OrderPlaced:
+        $ref: '#/components/messages/OrderPlaced'
+  stockReserved:
+    address: inventory.stock-reserved
+    description: Inventory announces a committed successful reservation to Ordering.
+    messages:
+      StockReserved:
+        $ref: '#/components/messages/StockReserved'
+  stockReservationRejected:
+    address: inventory.stock-reservation-rejected
+    description: Inventory announces a committed rejected reservation to Ordering.
+    messages:
+      StockReservationRejected:
+        $ref: '#/components/messages/StockReservationRejected'
+
+operations:
+  orderingPublishesOrderPlaced:
+    action: send
+    channel: { $ref: '#/channels/orderPlaced' }
+    summary: Produced by Ordering after its transaction commits; consumed by Inventory.
+  inventoryReceivesOrderPlaced:
+    action: receive
+    channel: { $ref: '#/channels/orderPlaced' }
+    summary: Inventory decides whether stock can be reserved.
+  inventoryPublishesStockReserved:
+    action: send
+    channel: { $ref: '#/channels/stockReserved' }
+    summary: Produced by Inventory after its reservation transaction commits; consumed by Ordering.
+  orderingReceivesStockReserved:
+    action: receive
+    channel: { $ref: '#/channels/stockReserved' }
+    summary: Ordering changes the correlated Pending order to Confirmed.
+  inventoryPublishesStockReservationRejected:
+    action: send
+    channel: { $ref: '#/channels/stockReservationRejected' }
+    summary: Produced by Inventory after persisting an unchanged-stock rejection; consumed by Ordering.
+  orderingReceivesStockReservationRejected:
+    action: receive
+    channel: { $ref: '#/channels/stockReservationRejected' }
+    summary: Ordering changes the correlated Pending order to Rejected.
+
+components:
+  messages:
+    OrderPlaced:
+      name: OrderPlaced
+      title: Order placed
+      correlationId: { location: '$message.payload#/orderId' }
+      payload: { $ref: '#/components/schemas/OrderPlacedPayload' }
+    StockReserved:
+      name: StockReserved
+      title: Stock reserved
+      correlationId: { location: '$message.payload#/orderId' }
+      payload: { $ref: '#/components/schemas/StockOutcomePayload' }
+    StockReservationRejected:
+      name: StockReservationRejected
+      title: Stock reservation rejected
+      correlationId: { location: '$message.payload#/orderId' }
+      payload: { $ref: '#/components/schemas/StockRejectedPayload' }
+  schemas:
+    OrderPlacedPayload:
+      type: object
+      required: [orderId, productId, quantity]
+      properties:
+        orderId: { type: string, format: uuid }
+        productId: { type: string, format: uuid }
+        quantity: { type: integer, minimum: 1 }
+    StockOutcomePayload:
+      type: object
+      required: [orderId, productId, quantity]
+      properties:
+        orderId: { type: string, format: uuid }
+        productId: { type: string, format: uuid }
+        quantity: { type: integer, minimum: 1 }
+    StockRejectedPayload:
+      allOf:
+        - $ref: '#/components/schemas/StockOutcomePayload'
+        - type: object
+          required: [reason]
+          properties:
+            reason: { type: string }

@@ -1,0 +1,3 @@
+@host = http://localhost:5080
+@orderId = REPLACE_WITH_ORDER_ID
+GET {{host}}/orders/{{orderId}}

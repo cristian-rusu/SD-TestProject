@@ -1,0 +1,11 @@
+@host = http://localhost:5080
+@unknownProductId = 00000000-0000-0000-0000-000000000001
+
+### Unknown product
+POST {{host}}/catalog/products/{{unknownProductId}}/publish
+
+### A draft created with zero price cannot be published
+POST {{host}}/catalog/products
+Content-Type: application/json
+
+{ "name": "Unpriced product", "description": "Draft", "price": 0 }

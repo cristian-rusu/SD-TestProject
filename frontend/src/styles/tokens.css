@@ -1,0 +1,17 @@
+:root {
+  --ink: #182e2b;
+  --muted: #62726d;
+  --accent: #226d56;
+  --surface: #fff;
+  --background: #f5f6f2;
+  --border: #dce3dc;
+  --radius: 10px;
+  font-family:
+    Inter,
+    Segoe UI,
+    Arial,
+    sans-serif;
+  color: var(--ink);
+  background: var(--background);
+  font-synthesis: none;
+}

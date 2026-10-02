@@ -1,0 +1,14 @@
+@host = http://localhost:5080
+@productId = 00000000-0000-0000-0000-000000000001
+
+### Place an order (use a published, stocked product ID)
+# @name placeOrder
+POST {{host}}/orders
+Content-Type: application/json
+
+{ "productId": "{{productId}}", "quantity": 2 }
+
+@orderId = {{placeOrder.response.body.$.orderId}}
+
+### Query the order
+GET {{host}}/orders/{{orderId}}

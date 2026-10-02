@@ -1,0 +1,18 @@
+<Project>
+  <PropertyGroup>
+    <FrontendRoot>$(MSBuildProjectDirectory)/../../frontend/</FrontendRoot>
+  </PropertyGroup>
+  <!-- Production assets are packaged with this executable, never deployed separately. -->
+  <Target Name="PublishFrontend" BeforeTargets="ComputeFilesToPublish">
+    <Exec WorkingDirectory="$(FrontendRoot)" Command="npm ci" />
+    <Exec WorkingDirectory="$(FrontendRoot)" Command="npm run build" />
+    <ItemGroup>
+      <FrontendAsset Include="$(FrontendRoot)dist/**/*" />
+      <ResolvedFileToPublish Include="@(FrontendAsset->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>wwwroot/%(FrontendAsset.RecursiveDir)%(FrontendAsset.Filename)%(FrontendAsset.Extension)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+</Project>

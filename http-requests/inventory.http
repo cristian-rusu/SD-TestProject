@@ -1,0 +1,11 @@
+@host = http://localhost:5080
+@productId = 00000000-0000-0000-0000-000000000001
+
+### Replenish stock (use an ID created in catalog.http)
+POST {{host}}/inventory/products/{{productId}}/replenish
+Content-Type: application/json
+
+{ "quantity": 10 }
+
+### Query stock
+GET {{host}}/inventory/products/{{productId}}

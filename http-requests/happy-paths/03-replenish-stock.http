@@ -1,0 +1,6 @@
+@host = http://localhost:5080
+@productId = REPLACE_WITH_PRODUCT_ID
+POST {{host}}/inventory/products/{{productId}}/replenish
+Content-Type: application/json
+
+{ "quantity": 10 }
